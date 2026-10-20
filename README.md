@@ -5,22 +5,13 @@
 
 专为 **Firefox / Zen Browser / Floorp** 等 Gecko 内核浏览器打造的轻量级用户脚本。
 
-彻底修复在 **[MC百科 (MCMod.cn)](https://www.mcmod.cn/)** 编辑长篇模组资料、教程时，插入超链接、图片或修改格式后，**编辑框内部滚动条自动跳回第 1 行（跳顶）** 的历史遗留兼容性顽疾。
+尝试修复在 **[MC百科 (MCMod.cn)](https://www.mcmod.cn/)** 编辑长篇模组资料时，插入超链接或修改图片信息后编辑框跳回第1行的问题。
+
+代码为Vibe Coding生成，可能存在问题。
 
 ---
 
-## 痛点背景
-
-在 MC百科编写长篇模组介绍或教程时，如果编辑者使用的是 Firefox 或 Zen Browser（尤其在 Linux 桌面环境下），往往会遇到一个让人崩溃的现象：
-* 在文章的第 200 行编辑时，点击工具栏插入超链接或图片；
-* 在弹出的对话框中点击“确定”；
-* **编辑框内部的内容瞬间弹跳回最顶端**，编辑者被迫在每次插入链接后手动拖动滚动条重新寻找刚才编辑的位置。
-
-很多长期在 Gecko / Linux 环境下编辑资料的朋友甚至养成了“点完确定立刻下意识向下狂拉滚动条”的无奈肌肉记忆。
-
----
-
-## 原理简述
+## 原理
 
 MCMod.cn 采用经典的百度富文本编辑器（UEditor 1.4.x），其核心编辑区是一个独立的 `<iframe>`（`ueditor_0`）。
 
@@ -30,6 +21,7 @@ MCMod.cn 采用经典的百度富文本编辑器（UEditor 1.4.x），其核心�
 4. 随后 UEditor 在未正确捕获失焦光标坐标的情况下，计算出偏移量为 0，向内层 iframe 发出了 `scrollTo(0, 0)` 指令。
 
 **本补丁的作用机制**：
+
 * 挂载 UEditor 的实例生命周期，捕获内层 `ueditor_0` 的真实滚动距离；
 * 在内层 `body.focus()` 注入现代 Gecko 支持的 `{ preventScroll: true }` 静默聚焦属性；
 * 拦截非用户触发的恶意 `scrollTo(0, 0)` 指令；
@@ -40,8 +32,8 @@ MCMod.cn 采用经典的百度富文本编辑器（UEditor 1.4.x），其核心�
 ## 安装方式
 
 ### 前置要求
-浏览器需安装任意一款用户脚本管理器扩展（任选其一即可）：
-* **[Violentmonkey (暴力猴)](https://violentmonkey.github.io/)** *(强烈推荐，开源且极简)*
+浏览器需安装任意一款用户脚本管理器扩展：
+* **[Violentmonkey (暴力猴)](https://violentmonkey.github.io/)** *(推荐)*
 * **[Tampermonkey (篡改猴)](https://www.tampermonkey.net/)**
 * **[ScriptCat (脚本猫)](https://scriptcat.org/)**
 
@@ -50,20 +42,7 @@ MCMod.cn 采用经典的百度富文本编辑器（UEditor 1.4.x），其核心�
 
 👉 **[安装脚本 (GitHub Raw)](https://raw.githubusercontent.com/BlueMap1e/mcmod-editor-gecko-fix/main/mcmod-editor-gecko-fix.user.js)**
 
-*(如果访问 GitHub 较慢，也可复制仓库中的 `mcmod-editor-gecko-fix.user.js` 代码，在脚本管理器中“新建脚本”并粘贴保存)*
-
----
-
-## 兼容性测试
-
-| 浏览器 | 渲染引擎 | 支持状态 |
-| :--- | :--- | :--- |
-| **Zen Browser** | Gecko | ✅ 完全支持 |
-| **Mozilla Firefox** | Gecko | ✅ 完全支持 |
-| **Floorp** | Gecko | ✅ 完全支持 |
-| **Google Chrome / Edge** | Blink/Chromium | ⚪ 原生免疫，无需此补丁 |
-
-*已在 Windows 11 及各大主流 Linux 发行版（Arch / Ubuntu / Fedora）环境下验证通过。*
+*(若访问 GitHub 较慢，也可复制仓库中的 `mcmod-editor-gecko-fix.user.js` 代码，在脚本管理器中“新建脚本”并粘贴保存)*
 
 ---
 
