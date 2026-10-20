@@ -7,7 +7,7 @@
 
 尝试修复在 **[MC百科 (MCMod.cn)](https://www.mcmod.cn/)** 编辑长篇模组资料时，插入超链接或修改图片信息后编辑框跳回第1行的问题。
 
-代码为Vibe Coding生成，可能存在问题。
+代码为Vibe Coding生成，可能存在问题。模型：Gemini 3.8 Flash。
 
 ---
 
@@ -43,9 +43,3 @@ MCMod.cn 采用经典的百度富文本编辑器（UEditor 1.4.x），其核心�
 👉 **[安装脚本 (GitHub Raw)](https://raw.githubusercontent.com/BlueMap1e/mcmod-editor-gecko-fix/main/mcmod-editor-gecko-fix.user.js)**
 
 *(若访问 GitHub 较慢，也可复制仓库中的 `mcmod-editor-gecko-fix.user.js` 代码，在脚本管理器中“新建脚本”并粘贴保存)*
-
----
-
-## 开源协议
-
-本项目采用 [MIT License](LICENSE) 授权。欢迎提交 Issue 或 Pull Request。
